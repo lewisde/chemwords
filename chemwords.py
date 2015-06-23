@@ -8,39 +8,24 @@ elemset = {'mn', 'h', 'sc', 'li', 'po', 'i', 'hf', 'ar', 'sr', 'al', 'ir', 'br',
 
 # let's assume this is filled with the elements (lowercased)
 word = input('enter a word: ')
+solutions = []
 root = Node(None)
 
-def build_tree(node, word):
+def build_tree(node, word, solution=''):
     if not word:
+        solutions.append(solution)
         node.complete = True
         return
 
     if word[0].lower() in elemset:
         child = Node(word[0])
         node.children.append(child)
-        build_tree(child, word[1:])
+        build_tree(child, word[1:], solution + word[0].title())
     if len(word) > 1 and word[:2].lower() in elemset:
         child = Node(word[:2])
         node.children.append(child)
-        build_tree(child, word[2:])
+        build_tree(child, word[2:], solution + word[:2].title())
 
 build_tree(root, word)
 
-word_list = []
-def print_words(node, word=''):
-    global word_list
-    if node.value:
-        word += node.value.title()
-    if node.complete:
-        word_list.append(word)
-    for child in node.children:
-        print_words(child, word)
-
-
-print_words(root)
-
-print(word_list)
-
-
-# now your tree should contain all the words
-# nodes marked complete should represent finsihed words
+print(solutions)
