@@ -7,7 +7,7 @@ class Node:
 elemset = {'mn', 'h', 'sc', 'li', 'po', 'i', 'hf', 'ar', 'sr', 'al', 'ir', 'br', 'mg', 'tm', 'db', 'ce', 'bi', 'he', 'fm', 'nd', 'n', 'cd', 'no', 'cf', 'c', 'ds', 'cr', 'rf', 'cu', 'mt', 'gd', 'p', 'fl', 'cs', 'pt', 'eu', 'md', 'be', 'lu', 's', 'pa', 'xe', 'pb', 'ra', 'co', 'b', 'k', 'zn', 'os', 'te', 'ca', 'cn', 'pd', 'ag', 'ni', 'bk', 'se', 'sb', 'as', 'rn', 'pm', 'yb', 'v', 'kr', 'lr', 'o', 'ge', 'tl', 'fr', 'sm', 'uuo', 'np', 'ru', 'na', 'f', 'uup', 'uus', 're', 'dy', 'rb', 'ne', 'hs', 'cm', 'ta', 'at', 'mo', 'th', 'au', 'pu', 'u', 'zr', 'rh', 'ac', 'es', 'y', 'sg', 'ho', 'in', 'cl', 'pr', 'ti', 'si', 'la', 'lv', 'sn', 'w', 'bh', 'fe', 'rg', 'tc', 'ba', 'uut', 'er', 'ga', 'hg', 'tb', 'am', 'nb'}
 
 # let's assume this is filled with the elements (lowercased)
-word = input('enter a word: ')
+#word = input('enter a word: ')
 solutions = []
 root = Node(None)
 
@@ -26,6 +26,19 @@ def build_tree(node, word, solution=''):
         node.children.append(child)
         build_tree(child, word[2:], solution + word[:2].title())
 
-build_tree(root, word)
+#build_tree(root, word)
 
-print(solutions)
+#print(solutions)
+with open('2of12.txt', 'r') as file:
+    line = file.readline()
+    while line:
+        word = line.strip()
+        build_tree(Node(None), word)
+        line = file.readline()
+        print(len(solutions))
+
+with open('results.txt', 'w') as file:
+    for row in solutions:
+        file.write('{}\n'.format(row))
+
+
