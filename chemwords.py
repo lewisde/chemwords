@@ -11,6 +11,8 @@ elemset = {'mn', 'h', 'sc', 'li', 'po', 'i', 'hf', 'ar', 'sr', 'al', 'ir', 'br',
 solutions = []
 root = Node(None)
 
+import os
+
 def build_tree(node, word, solution=''):
     if not word:
         solutions.append(solution)
@@ -29,16 +31,35 @@ def build_tree(node, word, solution=''):
 #build_tree(root, word)
 
 #print(solutions)
-with open('2of12.txt', 'r') as file:
-    line = file.readline()
-    while line:
-        word = line.strip()
-        build_tree(Node(None), word)
-        line = file.readline()
-        print(len(solutions))
 
-with open('results.txt', 'w') as file:
-    for row in solutions:
-        file.write('{}\n'.format(row))
+# get file directory listing for words
 
+directory_list = list(os.walk('./words'))
 
+for folder, folders, files in directory_list:
+    for filename in files:
+        print(filename)
+        if filename != '.DS_Store':
+            with open('words/' + filename, 'r') as file:
+                line = file.readline()
+                while line:
+                    word = line.strip()
+                    build_tree(Node(None), word)
+                    line = file.readline()
+        
+
+# with open('results.txt', 'w') as file:
+#     for row in solutions:
+#         file.write('{}\n'.format(row))
+
+words = set()
+for item in solutions:
+    words.add(item)
+
+results = list()
+for item in words:
+    results.append(item)
+
+with open('chemwords.txt', 'w') as file:
+    for item in sorted(results):
+        file.write('{}\n'.format(item))
